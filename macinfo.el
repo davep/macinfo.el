@@ -1,11 +1,27 @@
-;;; Work in progress!
+;;; macinfo.el --- Show information from a Mac's serial number
+;; Copyright 2017 by Dave Pearson <davep@davep.org>
+
+;; Author: Dave Pearson <davep@davep.org>
+;; Version: 0.1
+;; Keywords: convenience
+;; URL: https://github.com/davep/macinfo.el
+;; Package-Requires: ((cl-lib "0.5"))
+
+;;; Commentary:
+;;
+;; macinfo.el provides functions and commands for getting information out of
+;; the serial number of an Apple Mac.
+;;
+;; The code is currnetly incomplete and a work in progress.
+;;
+;; Sources of information used to write this code include:
+;; https://www.finetunedmac.com/forums/ubbthreads.php?ubb=showflat&Number=32011
+;; http://blog.coriolis.ch/2011/08/01/get-your-apple-device-model-name-in-a-readable-format/
 
 (require 'url)
 (require 'cl-lib)
 
-;; Information sources:
-;; https://www.finetunedmac.com/forums/ubbthreads.php?ubb=showflat&Number=32011
-;; http://blog.coriolis.ch/2011/08/01/get-your-apple-device-model-name-in-a-readable-format/
+;;; Code:
 
 (defun macinfo-decode-sn-11 (sn)
   "Decode the content of 11 digit serial number SN."
@@ -29,7 +45,10 @@ year; the `cdr' is the year."
       (format "%s %d" (if (car decoded) "Early" "Late") (cdr decoded)))))
 
 (defun macinfo-decode-sn-12-week (week year)
-  "Decode the week of manufacture from a serial number."
+  "Decode the week of manufacture from a serial number.
+
+WEEK is the week code found in the serial number; YEAR is the
+year code found in the serial number."
   (let* ((lookup "0123456789CDFGHJKLMNPQRTVWX")
          (match  (cl-search week lookup))
          (year   (macinfo-decode-sn-12-year-decoder year)))
@@ -99,6 +118,8 @@ year; the `cdr' is the year."
   (let ((sn (macinfo-get-serial-number)))
     (if sn
         (macinfo-show-decoded-serial-number sn)
-      (error "Unable to get the serial number, or this isn't a Mac."))))
+      (error "Unable to get the serial number, or this isn't a Mac"))))
 
 (provide 'macinfo)
+
+;;; macinfo.el ends here
