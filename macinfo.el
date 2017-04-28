@@ -1,5 +1,6 @@
 ;;; Work in progress!
 
+(require 'url)
 (require 'cl-lib)
 
 ;; Information sources:
@@ -35,6 +36,13 @@ year; the `cdr' is the year."
     (when match
       (+ match (if (car year) 1 28)))))
 
+(defun macinfo-decode-sn-12-model-code (mc)
+  (with-current-buffer
+      (url-retrieve-synchronously (format "http://support-sp.apple.com/sp/product?cc=%s&lang=en_US" mc) t)
+    (setf (point) (point-min))
+    (when (search-forward-regexp "<configCode>\\(.*\\)</configCode>")
+      (match-string 1))))
+
 (defun macinfo-decode-sn-12 (sn)
   "Decode the content of 12 digit serial number SN."
   (list
@@ -42,7 +50,7 @@ year; the `cdr' is the year."
    (cons 'year-of-manufacture (macinfo-decode-sn-12-year (substring sn 3 4)))
    (cons 'week-of-manufacture (macinfo-decode-sn-12-week (substring sn 4 5) (substring sn 3 4)))
    (cons 'unique-unit-code    (substring sn 5 8))
-   (cons 'model-code          (substring sn 8 12))))
+   (cons 'model-code          (macinfo-decode-sn-12-model-code (substring sn 8 12)))))
 
 (defconst macinfo-decoders
   '((11 . macinfo-decode-sn-11)
