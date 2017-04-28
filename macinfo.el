@@ -83,7 +83,13 @@ year; the `cdr' is the year."
         (help-window-select t))
     (with-help-window "*macinfo*"
       (if decoder
-          (princ (funcall decoder sn))
+          (cl-flet ((item (lambda (data id) (cdr (assoc id data)))))
+            (let ((data (funcall decoder sn)))
+              (princ (format "Information found in serial number %s:\n\n" sn))
+              (princ (format "Manufacture plant\t: %s\n" (item data 'plant-code)))
+              (princ (format "Manufature year\t\t: %s\n" (item data 'year-of-manufacture)))
+              (princ (format "Manufature week\t\t: %s\n" (item data 'week-of-manufacture)))
+              (princ (format "Model\t\t\t: %s"           (item data 'model-code)))))
         (princ "Sorry, I don't know how to decode %s" sn)))))
 
 ;;;###autoload
