@@ -37,6 +37,7 @@ year; the `cdr' is the year."
       (+ match (if (car year) 1 28)))))
 
 (defun macinfo-decode-sn-12-model-code (mc)
+  "Describe model code MC."
   (with-current-buffer
       (url-retrieve-synchronously (format "http://support-sp.apple.com/sp/product?cc=%s&lang=en_US" mc) t)
     (setf (point) (point-min))
