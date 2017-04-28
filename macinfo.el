@@ -7,6 +7,10 @@
 ;; URL: https://github.com/davep/macinfo.el
 ;; Package-Requires: ((cl-lib "0.5"))
 
+;; macinfo.el is free software distributed under the terms of the GNU
+;; General Public Licence, version 2 or (at your option) any later version.
+;; For details see the file COPYING.
+
 ;;; Commentary:
 ;;
 ;; macinfo.el provides functions and commands for getting information out of
