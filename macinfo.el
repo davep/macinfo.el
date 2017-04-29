@@ -22,10 +22,10 @@
 ;; https://www.finetunedmac.com/forums/ubbthreads.php?ubb=showflat&Number=32011
 ;; http://blog.coriolis.ch/2011/08/01/get-your-apple-device-model-name-in-a-readable-format/
 
+;;; Code:
+
 (require 'url)
 (require 'cl-lib)
-
-;;; Code:
 
 (defun macinfo-decode-sn-11 (sn)
   "Decode the content of 11 digit serial number SN."
