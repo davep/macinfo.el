@@ -5,7 +5,7 @@
 `macinfo.el` provides functions and commands for getting information out of
 the serial number of an Apple Mac.
 
-The code is currnetly incomplete and a work in progress.
+The code is currently incomplete and a work in progress.
 
 Sources of information used to write this code include:
 
