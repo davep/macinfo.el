@@ -96,7 +96,7 @@ year code found in the serial number."
   (message sn)
   (if sn
       (funcall f sn)
-    (error "Unable to get the serial number, or this isn't a Mac.")))
+    (error "Unable to get the serial number, or this isn't a Mac")))
 
 ;;;###autoload
 (defun macinfo-serial-number ()
