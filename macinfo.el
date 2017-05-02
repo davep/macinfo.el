@@ -91,14 +91,21 @@ year code found in the serial number."
         (when (search-forward "Serial Number (system): ")
           (buffer-substring-no-properties (point) (point-at-eol)))))))
 
+(defun macinfo-sn-funcall-or-error (sn f)
+  "If SN is non-nil, apply SN to F, otherwise show an error."
+  (message sn)
+  (if sn
+      (funcall f sn)
+    (error "Unable to get the serial number, or this isn't a Mac.")))
+
 ;;;###autoload
 (defun macinfo-serial-number ()
   "Show the serial number of a Mac."
   (interactive)
-  (let ((sn (macinfo-get-serial-number)))
-    (if sn
-        (message "Serial number: %s" sn)
-      (message "Unable to get the serial number, or this isn't a Mac."))))
+  (macinfo-sn-funcall-or-error
+   (macinfo-get-serial-number)
+   (lambda (sn)
+     (message "Serial number: %s" sn))))
 
 (defun macinfo-show-decoded-serial-number (sn)
   "Decode and show the information in serial number SN."
@@ -119,10 +126,10 @@ year code found in the serial number."
 (defun macinfo ()
   "Show as much information as we can gather from a Mac's serial number."
   (interactive)
-  (let ((sn (macinfo-get-serial-number)))
-    (if sn
-        (macinfo-show-decoded-serial-number sn)
-      (error "Unable to get the serial number, or this isn't a Mac"))))
+  (macinfo-sn-funcall-or-error
+   (macinfo-get-serial-number)
+   (lambda (sn)
+     (macinfo-show-decoded-serial-number sn))))
 
 (provide 'macinfo)
 
