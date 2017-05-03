@@ -93,7 +93,6 @@ year code found in the serial number."
 
 (defun macinfo-sn-funcall-or-error (sn f)
   "If SN is non-nil, apply SN to F, otherwise show an error."
-  (message sn)
   (if sn
       (funcall f sn)
     (error "Unable to get the serial number, or this isn't a Mac")))
