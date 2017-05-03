@@ -88,7 +88,7 @@ year code found in the serial number."
       (when (executable-find sysprof)
         (save-excursion
           (call-process sysprof nil t nil "SPHardwareDataType"))
-        (when (search-forward "Serial Number (system): ")
+        (when (search-forward "Serial Number (system): " nil t)
           (buffer-substring-no-properties (point) (point-at-eol)))))))
 
 (defun macinfo-sn-funcall-or-error (sn f)
